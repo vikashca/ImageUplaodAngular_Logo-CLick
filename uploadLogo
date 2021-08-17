@@ -1,0 +1,69 @@
+ <style>
+ 
+.imgupl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.img img {
+    width: 50px;
+    height: 35px;
+    display: block;
+    margin: 0 auto;
+}
+
+button.btn.btn-sm.btn-outline-grey {
+    width: 140px;
+    height: 45px;
+    border: 1px solid hsl(0deg 0% 84%);
+    border-radius: 5px;
+    opacity: 1;
+    background: hsl(0deg 0% 0% / 0%);
+}
+ </style>
+ 
+ 
+ 
+ <div class="d-flex align-items-center">
+      <div class="selectphoto ">
+          <div class="imgbtn">
+              <button class="btn btn-sm btn-outline-grey">
+
+                  <div class="img">
+                      <img *ngIf="profile_image" src={{profile_image}} style="width:100%;" />
+                      <img *ngIf="!profile_image" id="profile_image" src="assets/img/upload-file.png" />
+                      <div class="file-upload imgupl">
+                          <input type="file" name="somename" (change)="multipleFiles1($event)" style="opacity: 0;" />
+                      </div>
+                  </div>
+
+              </button>
+          </div>
+      </div>
+      <label class="ml-4" style="color: #666667;font-size: 14px;">Business LOGO</label>
+  </div>
+  
+  
+  multiple1: any[];
+  uploadProfileImage: any;
+  profile_image: any
+
+
+  multipleFiles1(event: any) {
+    this.multiple1 = [];
+    var multipleFiles = event.target.files;
+    this.uploadProfileImage = event.target.files[0]
+    if (multipleFiles) {
+      for (var file of multipleFiles) {
+        var multipleReader = new FileReader();
+        multipleReader.onload = (e: any) => {
+          this.profile_image = e.target.result;
+          console.log(this.profile_image);
+        }
+        multipleReader.readAsDataURL(file);
+      }
+    }
+  }
+  
+  
